@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleCRM.Application\SimpleCRM.Application.csproj" />
+    <ProjectReference Include="..\SimpleCRM.Domain\SimpleCRM.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

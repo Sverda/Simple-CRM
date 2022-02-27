@@ -7,4 +7,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleCRM.Application\SimpleCRM.Application.csproj" />
+    <ProjectReference Include="..\SimpleCRM.Infrastructure\SimpleCRM.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
