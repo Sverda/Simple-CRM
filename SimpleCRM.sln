@@ -7,11 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{12A8264C-E9C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.UI", "src\SimpleCRM.UI\SimpleCRM.UI.csproj", "{9734BD12-894D-4A0D-8944-4A209236AAFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Domain", "src\SimpleCRM.Domain\SimpleCRM.Domain.csproj", "{E61C108D-7983-4CDA-9572-47A072A3F56E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Domain", "src\SimpleCRM.Domain\SimpleCRM.Domain.csproj", "{E61C108D-7983-4CDA-9572-47A072A3F56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Application", "src\SimpleCRM.Application\SimpleCRM.Application.csproj", "{5E79745B-33A5-405D-AA99-D747822AE5E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Application", "src\SimpleCRM.Application\SimpleCRM.Application.csproj", "{5E79745B-33A5-405D-AA99-D747822AE5E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Infrastructure", "src\SimpleCRM.Infrastructure\SimpleCRM.Infrastructure.csproj", "{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Infrastructure", "src\SimpleCRM.Infrastructure\SimpleCRM.Infrastructure.csproj", "{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{67B937B5-9093-4200-BF42-0495223B19AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Tests.Application", "tests\SimpleCRM.Tests.Application\SimpleCRM.Tests.Application.csproj", "{8448F967-0F1D-4B84-9A6F-2E9976C3290E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8448F967-0F1D-4B84-9A6F-2E9976C3290E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8448F967-0F1D-4B84-9A6F-2E9976C3290E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8448F967-0F1D-4B84-9A6F-2E9976C3290E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8448F967-0F1D-4B84-9A6F-2E9976C3290E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{E61C108D-7983-4CDA-9572-47A072A3F56E} = {12A8264C-E9C6-4A6A-838A-BCC800EBCD22}
 		{5E79745B-33A5-405D-AA99-D747822AE5E4} = {12A8264C-E9C6-4A6A-838A-BCC800EBCD22}
 		{2D1EFF41-1AB1-4452-BCB5-F0C9DD053E63} = {12A8264C-E9C6-4A6A-838A-BCC800EBCD22}
+		{8448F967-0F1D-4B84-9A6F-2E9976C3290E} = {67B937B5-9093-4200-BF42-0495223B19AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D47DB77F-CAF1-4890-8AFD-E2A3E9160F14}
