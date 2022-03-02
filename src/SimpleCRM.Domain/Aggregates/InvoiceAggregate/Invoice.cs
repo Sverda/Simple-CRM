@@ -1,4 +1,5 @@
 ﻿using SimpleCRM.Domain.Common;
+using SimpleCRM.Domain.Services.Interfaces;
 
 namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
@@ -11,6 +12,13 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
         {
             Template = template;
             Customer = customer;
+        }
+
+        public async Task<InvoiceDocument> PrepareDocument(IDocumentsService documentsService)
+        {
+            Stream templateDocument = await Template.GetCopy(documentsService);
+            await Template.LoadFields(documentsService);
+            return null;
         }
     }
 }

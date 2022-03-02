@@ -13,6 +13,18 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             Year = year;
         }
 
+        public InvoiceNumber(string number)
+        {
+            var parts = number.Split('-');
+            Order = int.Parse(parts[0]);
+            Year = int.Parse(parts[1]);
+        }
+
+        public override string ToString()
+        {
+            return $"{Order}-{Year}";
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Order;
