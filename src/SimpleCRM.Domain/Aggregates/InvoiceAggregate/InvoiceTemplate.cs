@@ -15,17 +15,13 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             Fields = fields;
         }
 
-        public async Task<Stream> GetCopy(IDocumentsService documentsService, CancellationToken cancellationToken = default)
+        public async Task LoadFields(
+            IDocumentsService documentsService,
+            CancellationToken cancellationToken = default)
         {
-            using Stream templateDocument = documentsService.LoadTemplateFile(Path);
-            Stream copy = new MemoryStream();
-            await templateDocument.CopyToAsync(copy, cancellationToken);
-            return copy;
-        }
-
-        public async Task LoadFields(IDocumentsService documentsService, CancellationToken cancellationToken = default)
-        {
-            var keys = documentsService.GetReplacableFieldKeys(ReplaceableField.KeyIndicator);
+            Stream templateOriginal = documentsService.LoadFileAsReadableOnly(Path);
+            Stream templateCopy = await documentsService.GetDocCopy(templateOriginal, cancellationToken);
+            var keys = documentsService.FindWithRegex(templateCopy, ReplaceableField.Regex);
             Fields = keys.Select(k => new ReplaceableField(k));
         }
     }

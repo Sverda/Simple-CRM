@@ -16,22 +16,53 @@ namespace SimpleCRM.Application.Services
             this.fileSystem = fileSystem;
         }
 
-        public Stream LoadTemplateFile(string path)
+        public Stream LoadFileAsReadableOnly(string path)
         {
             return fileSystem.FileStream.Create(path, FileMode.Open, FileAccess.Read);
         }
 
-        public IEnumerable<string> GetReplacableFieldKeys(string path)
+        public async Task<Stream> GetDocCopy(Stream docStream, CancellationToken cancellationToken = default)
         {
-            using Stream fileStream = fileSystem.File.Open(path, FileMode.Open, FileAccess.ReadWrite);
-            using WordprocessingDocument wordDoc = WordprocessingDocument.Open(fileStream, true);
-            Body body = wordDoc?.MainDocumentPart?.Document.Body
+            Stream copy = new MemoryStream();
+            await docStream.CopyToAsync(copy, cancellationToken);
+            return copy;
+        }
+
+        public IEnumerable<string> FindWithRegex(Stream docStream, string regexPattern)
+        {
+            using var wordDoc = WordprocessingDocument.Open(docStream, false);
+            var body = wordDoc?.MainDocumentPart?.Document.Body
                 ?? throw new Exception("Can't get Word document's main part");
-            Regex? regex = new(@"\$(.+)\$");
+            Regex regex = new(regexPattern);
             var keys = body
                 .Descendants<Paragraph>()
                 .Select(p => regex.Match(p.InnerText).Groups.Values.First().Value);
             return keys.Where(x => !string.IsNullOrEmpty(x));
+        }
+
+        public Stream ReplaceParagraphsValue(
+            Stream docStream,
+            string key,
+            string value)
+        {
+            using var wordDoc = WordprocessingDocument.Open(docStream, true);
+            var keysParagraphs = wordDoc.MainDocumentPart
+                ?.Document?.Body
+                ?.Descendants<Paragraph>()
+                .Where(p => p.InnerText.Contains(key));
+            if (keysParagraphs is null)
+            {
+                return docStream;
+            }
+
+            foreach (var currentParagraph in keysParagraphs)
+            {
+                var modifiedString = currentParagraph.InnerText.Replace(key, value);
+                currentParagraph.RemoveAllChildren<Run>();
+                currentParagraph.AppendChild<Run>(new Run(new Text(modifiedString)));
+            }
+
+            return docStream;
         }
     }
 }

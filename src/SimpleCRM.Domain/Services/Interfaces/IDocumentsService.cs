@@ -2,7 +2,9 @@
 {
     public interface IDocumentsService
     {
-        Stream LoadTemplateFile(string path);
-        IEnumerable<string> GetReplacableFieldKeys(string path);
+        Stream LoadFileAsReadableOnly(string path);
+        Task<Stream> GetDocCopy(Stream docStream, CancellationToken cancellationToken = default);
+        IEnumerable<string> FindWithRegex(Stream docStream, string regexPattern);
+        Stream ReplaceParagraphsValue(Stream docStream, string key, string value);
     }
 }

@@ -14,10 +14,11 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             Customer = customer;
         }
 
-        public async Task<InvoiceDocument> PrepareDocument(IDocumentsService documentsService)
+        public async Task<InvoiceDocument> PrepareDocument(
+            IDocumentsService documentsService,
+            CancellationToken cancellationToken = default)
         {
-            Stream templateDocument = await Template.GetCopy(documentsService);
-            await Template.LoadFields(documentsService);
+            await Template.LoadFields(documentsService, cancellationToken);
             return null;
         }
     }

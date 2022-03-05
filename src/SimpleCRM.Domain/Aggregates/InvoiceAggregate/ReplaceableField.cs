@@ -5,6 +5,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
     public class ReplaceableField : ValueObject
     {
         public static readonly string KeyIndicator = "$";
+        public static readonly string Regex = @"\$(.+)\$";
 
         public string Key { get; }
 
