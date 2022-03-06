@@ -4,21 +4,23 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
     public class ReplaceableField : ValueObject
     {
-        public static readonly string KeyIndicator = "$";
-        public static readonly string Regex = @"\$(.+)\$";
+        public static readonly char KeyIndicator = '$';
+        public static readonly string KeyValueRegex = @$"\{KeyIndicator}(.+)\{KeyIndicator}";
 
-        public string Key { get; }
+        public string KeyValue { get; }
 
-        public string FullExpression => $"{KeyIndicator}{Key}{KeyIndicator}";
+        public string FullExpression => $"{KeyIndicator}{KeyValue}{KeyIndicator}";
 
-        public ReplaceableField(string key)
+        public ReplaceableField(string keyValue)
         {
-            Key = key;
+            KeyValue = keyValue.Trim(KeyIndicator);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Key;
+            yield return KeyValue;
         }
+
+        public override string ToString() => FullExpression;
     }
 }

@@ -13,11 +13,6 @@ namespace SimpleCRM.Tests.Application
     [TestFixture]
     public class DocumentsServiceTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void ShouldLoadTemplateFromResources()
         {
@@ -48,7 +43,7 @@ namespace SimpleCRM.Tests.Application
             // Act
             Stream templateOriginal = service.LoadFileAsReadableOnly(path);
             Stream templateCopy = await service.GetDocCopy(templateOriginal);
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.Regex).ToArray();
+            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
 
             // Assert
             Assert.That(fieldKeys, Is.Not.Empty);
@@ -72,14 +67,14 @@ namespace SimpleCRM.Tests.Application
             // Act
             Stream templateOriginal = service.LoadFileAsReadableOnly(path);
             Stream templateCopy = await service.GetDocCopy(templateOriginal);
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.Regex).ToArray();
+            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
 
             // Assert
             Assert.That(fieldKeys, Is.Not.Empty);
             foreach (var key in fieldKeys)
             {
-                Assert.That(key, Does.StartWith(ReplaceableField.KeyIndicator));
-                Assert.That(key, Does.EndWith(ReplaceableField.KeyIndicator));
+                Assert.That(key, Does.StartWith(new string(ReplaceableField.KeyIndicator, 1)));
+                Assert.That(key, Does.EndWith(new string(ReplaceableField.KeyIndicator, 1)));
             }
         }
 
@@ -103,7 +98,7 @@ namespace SimpleCRM.Tests.Application
             templateCopy = service.ReplaceParagraphsValue(templateCopy, "$ClientData$", "Rich client");
 
             // Assert
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.Regex).ToArray();
+            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
             Assert.That(fieldKeys, Is.Not.Empty);
             Assert.That(fieldKeys, Has.Length.EqualTo(2));
         }

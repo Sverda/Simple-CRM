@@ -64,5 +64,19 @@ namespace SimpleCRM.Application.Services
 
             return docStream;
         }
+
+        public string GetTempFilePath() => fileSystem.Path.GetTempFileName();
+
+        public async Task SaveDoc(string path, Stream content, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            using var file = fileSystem.FileStream.Create(path, FileMode.Create);
+            cancellationToken.ThrowIfCancellationRequested();
+            await content.CopyToAsync(file);
+        }
     }
 }

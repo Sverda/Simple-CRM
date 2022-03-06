@@ -21,5 +21,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             yield return City;
             yield return CityCode;
         }
+
+        public override string ToString() => $"{Street}, {City}, {CityCode}";
     }
 }

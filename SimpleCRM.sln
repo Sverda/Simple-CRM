@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Infrastructure", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{67B937B5-9093-4200-BF42-0495223B19AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRM.Tests.Application", "tests\SimpleCRM.Tests.Application\SimpleCRM.Tests.Application.csproj", "{8448F967-0F1D-4B84-9A6F-2E9976C3290E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCRM.Tests", "tests\SimpleCRM.Tests.Application\SimpleCRM.Tests.csproj", "{8448F967-0F1D-4B84-9A6F-2E9976C3290E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

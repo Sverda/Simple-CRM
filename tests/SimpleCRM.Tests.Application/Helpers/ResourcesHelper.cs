@@ -8,7 +8,7 @@ namespace SimpleCRM.Tests.Application.Helpers
         public static byte[] GetTemplateBytes()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("SimpleCRM.Tests.Application.Resources.Template.docx");
+            using var stream = assembly.GetManifestResourceStream("SimpleCRM.Tests.Resources.Template.docx");
             MemoryStream ms = new();
             stream.CopyTo(ms);
             return ms.ToArray();

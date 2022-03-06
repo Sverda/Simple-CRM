@@ -5,24 +5,28 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
     public class InvoiceTemplate : Entity<Guid>
     {
-        public string Path { get; set; }
+        public string Path { get; private set; }
 
-        public IEnumerable<ReplaceableField> Fields { get; set; }
+        public IEnumerable<ReplaceableField>? Fields { get; private set; }
 
-        public InvoiceTemplate(Guid id, string path, IEnumerable<ReplaceableField> fields) : base(id)
+        public InvoiceTemplate(Guid id, string path) : base(id)
         {
             Path = path;
-            Fields = fields;
         }
 
-        public async Task LoadFields(
+        public void LoadFields(IDocumentsService documentsService)
+        {
+            Stream templateOriginal = documentsService.LoadFileAsReadableOnly(Path);
+            var keys = documentsService.FindWithRegex(templateOriginal, ReplaceableField.KeyValueRegex);
+            Fields = keys.Select(k => new ReplaceableField(k));
+        }
+
+        public async Task<Stream> GetCopy(
             IDocumentsService documentsService,
             CancellationToken cancellationToken = default)
         {
             Stream templateOriginal = documentsService.LoadFileAsReadableOnly(Path);
-            Stream templateCopy = await documentsService.GetDocCopy(templateOriginal, cancellationToken);
-            var keys = documentsService.FindWithRegex(templateCopy, ReplaceableField.Regex);
-            Fields = keys.Select(k => new ReplaceableField(k));
+            return await documentsService.GetDocCopy(templateOriginal, cancellationToken);
         }
     }
 }

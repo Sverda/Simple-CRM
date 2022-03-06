@@ -18,8 +18,18 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             IDocumentsService documentsService,
             CancellationToken cancellationToken = default)
         {
-            await Template.LoadFields(documentsService, cancellationToken);
-            return null;
+            Template.LoadFields(documentsService);
+            if (!Template.Fields.Any(f => f.Equals(Customer.AsField)))
+            {
+                throw new Exception($"Template doesn't contain field {Customer.AsField}");
+            }
+
+            var templateCopy = await Template.GetCopy(documentsService, cancellationToken);
+            templateCopy = documentsService.ReplaceParagraphsValue(
+                templateCopy,
+                Customer.AsField.ToString(),
+                Customer.ToString());
+            return new InvoiceDocument(templateCopy);
         }
     }
 }
