@@ -12,6 +12,8 @@ namespace SimpleCRM.Infrastructure
 
             services.AddOptions<DatabaseConfig>()
                 .Bind(configurationRoot.GetSection(nameof(DatabaseConfig)));
+
+            services.AddDbContext<CrmContext>();
         }
     }
 }
