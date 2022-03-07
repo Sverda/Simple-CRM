@@ -1,4 +1,5 @@
 ﻿using SimpleCRM.Domain.Common;
+using SimpleCRM.Domain.Factories;
 using SimpleCRM.Domain.Services.Interfaces;
 
 namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
@@ -29,7 +30,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
                 templateCopy,
                 Customer.AsField.ToString(),
                 Customer.ToString());
-            return new InvoiceDocument(templateCopy);
+            return InvoiceDocumentFactory.Create(templateCopy);
         }
     }
 }

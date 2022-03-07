@@ -4,6 +4,7 @@ using SimpleCRM.Domain.Aggregates.InvoiceAggregate;
 using SimpleCRM.Domain.Factories;
 using SimpleCRM.Tests.Application.Helpers;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace SimpleCRM.Tests.Domain
             // Act
             var invoiceDocument = await invoice.PrepareDocument(service);
             var fieldKeys = service.FindWithRegex(
-                invoiceDocument.AsStream(),
+                new MemoryStream(invoiceDocument.Content),
                 ReplaceableField.KeyValueRegex).ToArray();
 
             // Assert

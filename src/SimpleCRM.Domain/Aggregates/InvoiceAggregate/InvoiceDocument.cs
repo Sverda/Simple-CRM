@@ -1,4 +1,5 @@
 ﻿using SimpleCRM.Domain.Common;
+using SimpleCRM.Domain.Factories;
 using SimpleCRM.Domain.Services.Interfaces;
 
 namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
@@ -8,34 +9,17 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
         public string Path { get; }
         public byte[] Content { get; }
 
-        public InvoiceDocument(string path, byte[] content)
+        internal InvoiceDocument(string path, byte[] content)
         {
             Path = path;
             Content = content;
-        }
-
-        public InvoiceDocument(Stream stream)
-        {
-            Path = string.Empty;
-
-            var ms = new MemoryStream();
-            stream.Position = 0;
-            stream.CopyTo(ms);
-            Content = ms.ToArray();
         }
 
         public async Task<InvoiceDocument> SaveToTemp(
             IDocumentsService documentsService,
             CancellationToken cancellationToken = default)
         {
-            var path = documentsService.GetTempFilePath();
-            await documentsService.SaveDoc(path, AsStream(), cancellationToken);
-            return new InvoiceDocument(path, Content);
-        }
-
-        public Stream AsStream()
-        {
-            return new MemoryStream(Content);
+            return await InvoiceDocumentFactory.CreateTemp(documentsService, Content, cancellationToken);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
