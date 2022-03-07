@@ -8,7 +8,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
         public Customer Customer { get; set; }
         public InvoiceTemplate Template { get; set; }
 
-        public Invoice(InvoiceNumber number, InvoiceTemplate template, Customer customer) : base(number)
+        internal Invoice(InvoiceNumber number, InvoiceTemplate template, Customer customer) : base(number)
         {
             Template = template;
             Customer = customer;

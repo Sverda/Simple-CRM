@@ -9,7 +9,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 
         public ReplaceableField AsField => new("ClientData");
 
-        public Customer(Guid id, string name, Address address) : base(id)
+        internal Customer(Guid id, string name, Address address) : base(id)
         {
             Name = name;
             Address = address;

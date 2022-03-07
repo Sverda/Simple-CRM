@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using SimpleCRM.Application.Services;
 using SimpleCRM.Domain.Aggregates.InvoiceAggregate;
+using SimpleCRM.Domain.Factories;
 using SimpleCRM.Tests.Application.Helpers;
-using System;
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
@@ -26,12 +26,11 @@ namespace SimpleCRM.Tests.Domain
                 }
             );
             var service = new DocumentsService(fileSystem);
-            var template = new InvoiceTemplate(Guid.NewGuid(), templatePath);
-            var customer = new Customer(
-                Guid.NewGuid(),
+            var invoice = InvoiceAggregateFactory.CreateFresh(
+                1,
+                templatePath,
                 "Cute client",
                 new Address("st. Nice", "Nicer", "00-000"));
-            var invoice = new Invoice(new InvoiceNumber(1, 2022), template, customer);
 
             // Act
             var invoiceDocument = await invoice.PrepareDocument(service);

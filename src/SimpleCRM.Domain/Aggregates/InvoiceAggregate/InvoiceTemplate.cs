@@ -9,7 +9,7 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 
         public IEnumerable<ReplaceableField>? Fields { get; private set; }
 
-        public InvoiceTemplate(Guid id, string path) : base(id)
+        internal InvoiceTemplate(Guid id, string path) : base(id)
         {
             Path = path;
         }
