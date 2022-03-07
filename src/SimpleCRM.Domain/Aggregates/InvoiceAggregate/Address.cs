@@ -4,9 +4,9 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
     public class Address : ValueObject
     {
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string CityCode { get; set; }
+        public string Street { get; }
+        public string City { get; }
+        public string CityCode { get; }
 
         public Address(string street, string city, string cityCode)
         {

@@ -4,8 +4,8 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
     public class InvoiceNumber : ValueObject
     {
-        public int Order { get; set; }
-        public int Year { get; set; }
+        public int Order { get; }
+        public int Year { get; }
 
         public InvoiceNumber(int order, int year)
         {
