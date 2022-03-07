@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label x:Name="test" Content="Test" />
+        <StackPanel>
+            <Label x:Name="settingsTest" Content="Settings Placeholder" />
+            <Label x:Name="dbTest" Content="Database Placeholder" />
+        </StackPanel>
     </Grid>
 </Window>

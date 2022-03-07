@@ -25,6 +25,13 @@ namespace SimpleCRM.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CustomerEntity>()
+                .HasKey(c => c.Id);
+            modelBuilder.Entity<InvoiceEntity>()
+                .HasKey(c => c.Number);
+            modelBuilder.Entity<TemplateEntity>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<CustomerEntity>()
                 .HasMany(c => c.Invoices)
                 .WithOne(i => i.Customer)
                 .IsRequired();
@@ -33,6 +40,7 @@ namespace SimpleCRM.Infrastructure.Database
                 .HasMany(t => t.Invoices)
                 .WithOne(i => i.Template)
                 .IsRequired();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

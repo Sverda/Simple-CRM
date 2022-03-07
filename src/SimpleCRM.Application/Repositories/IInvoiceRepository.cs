@@ -6,7 +6,7 @@ namespace SimpleCRM.Application.Repositories
     {
         Task Add(Invoice invoice, CancellationToken cancellationToken = default);
         Task DeleteById(string invoiceNumber, CancellationToken cancellationToken = default);
-        Task<IEnumerable<Invoice>> GetAll(CancellationToken cancellationToken = default);
+        IEnumerable<Invoice> GetAll();
         Task<Invoice> GetById(string invoiceNumber, CancellationToken cancellationToken = default);
         Task UpdateById(Invoice invoice, CancellationToken cancellationToken = default);
     }

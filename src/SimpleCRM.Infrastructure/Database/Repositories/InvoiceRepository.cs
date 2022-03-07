@@ -14,6 +14,7 @@ namespace SimpleCRM.Infrastructure.Database.Repositories
         public InvoiceRepository(CrmContext context)
         {
             this.context = context;
+            //context.Database.EnsureCreated();
         }
 
         public async Task<Invoice> GetById(string invoiceNumber, CancellationToken cancellationToken = default)
@@ -25,10 +26,12 @@ namespace SimpleCRM.Infrastructure.Database.Repositories
             return invoiceEntity.MapToDomain();
         }
 
-        public async Task<IEnumerable<Invoice>> GetAll(CancellationToken cancellationToken = default)
+        public IEnumerable<Invoice> GetAll()
         {
-            var all = await context.Invoices.ToListAsync(cancellationToken);
-            return all.Select(i => i.MapToDomain());
+            return context.Invoices
+                .Include(i => i.Template)
+                .Include(i => i.Customer)
+                .Select(i => i.MapToDomain());
         }
 
         public async Task Add(Invoice invoice, CancellationToken cancellationToken = default)
