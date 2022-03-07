@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleCRM.Application.Repositories;
 using SimpleCRM.Infrastructure.Database;
+using SimpleCRM.Infrastructure.Database.Repositories;
 
 namespace SimpleCRM.Infrastructure
 {
@@ -14,6 +16,7 @@ namespace SimpleCRM.Infrastructure
                 .Bind(configurationRoot.GetSection(nameof(DatabaseConfig)));
 
             services.AddDbContext<CrmContext>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
         }
     }
 }
