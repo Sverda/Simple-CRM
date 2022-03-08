@@ -1,33 +1,13 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using SimpleCRM.Domain.Services.Interfaces;
-using System.IO.Abstractions;
 using System.Text.RegularExpressions;
 using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 
 namespace SimpleCRM.Application.Services
 {
-    internal class DocumentsService : IDocumentsService
+    internal class DocumentsProcessingService : IDocumentsProcessingService
     {
-        private readonly IFileSystem fileSystem;
-
-        public DocumentsService(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        public Stream LoadFileAsReadableOnly(string path)
-        {
-            return fileSystem.FileStream.Create(path, FileMode.Open, FileAccess.Read);
-        }
-
-        public async Task<Stream> GetDocCopy(Stream docStream, CancellationToken cancellationToken = default)
-        {
-            Stream copy = new MemoryStream();
-            await docStream.CopyToAsync(copy, cancellationToken);
-            return copy;
-        }
-
         public IEnumerable<string> FindWithRegex(Stream docStream, string regexPattern)
         {
             using var wordDoc = WordprocessingDocument.Open(docStream, false);
@@ -63,20 +43,6 @@ namespace SimpleCRM.Application.Services
             }
 
             return docStream;
-        }
-
-        public string GetTempFilePath() => fileSystem.Path.GetTempFileName();
-
-        public async Task SaveDoc(string path, Stream content, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-
-            using var file = fileSystem.FileStream.Create(path, FileMode.Create);
-            cancellationToken.ThrowIfCancellationRequested();
-            await content.CopyToAsync(file);
         }
     }
 }

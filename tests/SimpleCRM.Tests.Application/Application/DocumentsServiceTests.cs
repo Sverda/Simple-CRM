@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SimpleCRM.Application.Services;
 using SimpleCRM.Domain.Aggregates.InvoiceAggregate;
+using SimpleCRM.Infrastructure.Documents.Repositories;
 using SimpleCRM.Tests.Application.Helpers;
 using System.Collections.Generic;
 using System.IO;
@@ -38,12 +39,13 @@ namespace SimpleCRM.Tests.Application
                     { path, new MockFileData(templateBytes) }
                 }
             );
-            var service = new DocumentsService(fileSystem);
+            var documentsProcessing = new DocumentsProcessingService();
+            var files = new DocumentsAccessRepository(fileSystem);
 
             // Act
-            Stream templateOriginal = service.LoadFileAsReadableOnly(path);
-            Stream templateCopy = await service.GetDocCopy(templateOriginal);
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
+            Stream templateOriginal = files.LoadAsReadOnly(path);
+            Stream templateCopy = await files.GetCopy(templateOriginal);
+            var fieldKeys = documentsProcessing.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
 
             // Assert
             Assert.That(fieldKeys, Is.Not.Empty);
@@ -62,12 +64,13 @@ namespace SimpleCRM.Tests.Application
                     { path, new MockFileData(templateBytes) }
                 }
             );
-            var service = new DocumentsService(fileSystem);
+            var documentsProcessing = new DocumentsProcessingService();
+            var files = new DocumentsAccessRepository(fileSystem);
 
             // Act
-            Stream templateOriginal = service.LoadFileAsReadableOnly(path);
-            Stream templateCopy = await service.GetDocCopy(templateOriginal);
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
+            Stream templateOriginal = files.LoadAsReadOnly(path);
+            Stream templateCopy = await files.GetCopy(templateOriginal);
+            var fieldKeys = documentsProcessing.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
 
             // Assert
             Assert.That(fieldKeys, Is.Not.Empty);
@@ -90,15 +93,16 @@ namespace SimpleCRM.Tests.Application
                     { path, new MockFileData(templateBytes) }
                 }
             );
-            var service = new DocumentsService(fileSystem);
+            var documentsProcessing = new DocumentsProcessingService();
+            var files = new DocumentsAccessRepository(fileSystem);
 
             // Act
-            Stream templateOriginal = service.LoadFileAsReadableOnly(path);
-            Stream templateCopy = await service.GetDocCopy(templateOriginal);
-            templateCopy = service.ReplaceParagraphsValue(templateCopy, "$ClientData$", "Rich client");
+            Stream templateOriginal = files.LoadAsReadOnly(path);
+            Stream templateCopy = await files.GetCopy(templateOriginal);
+            templateCopy = documentsProcessing.ReplaceParagraphsValue(templateCopy, "$ClientData$", "Rich client");
 
             // Assert
-            var fieldKeys = service.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
+            var fieldKeys = documentsProcessing.FindWithRegex(templateCopy, ReplaceableField.KeyValueRegex).ToArray();
             Assert.That(fieldKeys, Is.Not.Empty);
             Assert.That(fieldKeys, Has.Length.EqualTo(2));
         }

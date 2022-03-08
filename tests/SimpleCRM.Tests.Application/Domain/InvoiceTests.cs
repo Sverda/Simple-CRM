@@ -2,6 +2,7 @@
 using SimpleCRM.Application.Services;
 using SimpleCRM.Domain.Aggregates.InvoiceAggregate;
 using SimpleCRM.Domain.Factories;
+using SimpleCRM.Infrastructure.Documents.Repositories;
 using SimpleCRM.Tests.Application.Helpers;
 using System.Collections.Generic;
 using System.IO;
@@ -26,16 +27,19 @@ namespace SimpleCRM.Tests.Domain
                     { templatePath, new MockFileData(templateBytes) }
                 }
             );
-            var service = new DocumentsService(fileSystem);
+            var documentsProcessing = new DocumentsProcessingService();
+            var files = new DocumentsAccessRepository(fileSystem);
             var invoice = InvoiceAggregateFactory.CreateFresh(
                 1,
                 templatePath,
                 "Cute client",
                 new Address("st. Nice", "Nicer", "00-000"));
+            var templateOriginal = files.LoadAsReadOnly(templatePath);
+            var templateCopy = await files.GetCopy(templateOriginal);
 
             // Act
-            var invoiceDocument = await invoice.PrepareDocument(service);
-            var fieldKeys = service.FindWithRegex(
+            var invoiceDocument = invoice.PrepareDocument(documentsProcessing, templateOriginal, templateCopy);
+            var fieldKeys = documentsProcessing.FindWithRegex(
                 new MemoryStream(invoiceDocument.Content),
                 ReplaceableField.KeyValueRegex).ToArray();
 

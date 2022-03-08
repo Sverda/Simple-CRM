@@ -1,6 +1,4 @@
 ﻿using SimpleCRM.Domain.Common;
-using SimpleCRM.Domain.Factories;
-using SimpleCRM.Domain.Services.Interfaces;
 
 namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
 {
@@ -13,13 +11,6 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
         {
             Path = path;
             Content = content;
-        }
-
-        public async Task<InvoiceDocument> SaveToTemp(
-            IDocumentsService documentsService,
-            CancellationToken cancellationToken = default)
-        {
-            return await InvoiceDocumentFactory.CreateTemp(documentsService, Content, cancellationToken);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

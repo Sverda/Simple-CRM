@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleCRM.Application.Repositories;
 using SimpleCRM.Infrastructure.Database;
 using SimpleCRM.Infrastructure.Database.Repositories;
+using SimpleCRM.Infrastructure.Documents;
+using SimpleCRM.Infrastructure.Documents.Repositories;
 
 namespace SimpleCRM.Infrastructure
 {
@@ -14,9 +16,12 @@ namespace SimpleCRM.Infrastructure
 
             services.AddOptions<DatabaseConfig>()
                 .Bind(configurationRoot.GetSection(nameof(DatabaseConfig)));
+            services.AddOptions<TemplatesConfig>()
+                .Bind(configurationRoot.GetSection(nameof(TemplatesConfig)));
 
             services.AddDbContext<CrmContext>();
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+            services.AddTransient<IDocumentsAccessRepository, DocumentsAccessRepository>();
         }
     }
 }

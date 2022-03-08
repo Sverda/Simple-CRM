@@ -15,17 +15,17 @@ namespace SimpleCRM.Domain.Aggregates.InvoiceAggregate
             Customer = customer;
         }
 
-        public async Task<InvoiceDocument> PrepareDocument(
-            IDocumentsService documentsService,
-            CancellationToken cancellationToken = default)
+        public InvoiceDocument PrepareDocument(
+            IDocumentsProcessingService documentsService,
+            Stream templateOriginal,
+            Stream templateCopy)
         {
-            Template.LoadFields(documentsService);
+            Template.LoadFields(documentsService, templateOriginal);
             if (!Template.Fields.Any(f => f.Equals(Customer.AsField)))
             {
                 throw new Exception($"Template doesn't contain field {Customer.AsField}");
             }
 
-            var templateCopy = await Template.GetCopy(documentsService, cancellationToken);
             templateCopy = documentsService.ReplaceParagraphsValue(
                 templateCopy,
                 Customer.AsField.ToString(),

@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SimpleCRM.Application\SimpleCRM.Application.csproj" />
+    <ProjectReference Include="..\..\src\SimpleCRM.Infrastructure\SimpleCRM.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
