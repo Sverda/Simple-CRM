@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SimpleCRM.Application.ViewModel.Helpers;
+using SimpleCRM.UI.View;
 using SimpleCRM.UI.View.Helpers;
 
 namespace SimpleCRM.UI
@@ -8,10 +9,10 @@ namespace SimpleCRM.UI
     {
         public static void AddViews(this IServiceCollection services)
         {
-            services.AddSingleton<IViewLocator, ViewLocator>();
             services.AddSingleton<IUIContext, WPFContext>();
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<LayoutView>();
         }
     }
 }

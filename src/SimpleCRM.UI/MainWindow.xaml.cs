@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using SimpleCRM.Application.Repositories;
-using SimpleCRM.Infrastructure.Database;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace SimpleCRM.UI
 {
@@ -11,12 +7,9 @@ namespace SimpleCRM.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(IOptions<DatabaseConfig> options, IInvoiceRepository invoiceRepository)
+        public MainWindow()
         {
             InitializeComponent();
-
-            settingsTest.Content = options?.Value?.ConnectionStrings?.Default ?? "";
-            dbTest.Content = invoiceRepository.GetAll().FirstOrDefault()?.Id?.ToString() ?? "";
         }
     }
 }

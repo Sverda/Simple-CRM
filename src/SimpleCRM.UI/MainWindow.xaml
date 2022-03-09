@@ -4,12 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleCRM.UI"
+        xmlns:views="clr-namespace:SimpleCRM.UI.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        MinHeight="450" MinWidth="800">
     <Grid>
-        <StackPanel>
-            <Label x:Name="settingsTest" Content="Settings Placeholder" />
-            <Label x:Name="dbTest" Content="Database Placeholder" />
-        </StackPanel>
+        <views:LayoutView />
     </Grid>
 </Window>

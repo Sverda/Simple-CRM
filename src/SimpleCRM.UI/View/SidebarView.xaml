@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="SimpleCRM.UI.View.SidebarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleCRM.UI.View" 
+             xmlns:design="clr-namespace:SimpleCRM.UI.View.Design" 
+             xmlns:helpers="clr-namespace:SimpleCRM.UI.View.Helpers"
+             helpers:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:viewmodel="clr-namespace:SimpleCRM.Application.ViewModel;assembly=SimpleCRM.Application" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:SidebarViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <x:Array x:Key="designSource" Type="{x:Type design:DesignSidebarOptionViewModel}">
+                <design:DesignSidebarOptionViewModel/>
+                <design:DesignSidebarOptionViewModel IsSelected="True"/>
+                <design:DesignSidebarOptionViewModel/>
+            </x:Array>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Options}"
+                      d:ItemsSource="{StaticResource designSource}"
+                      VerticalAlignment="Center">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type viewmodel:SidebarOptionViewModel}">
+                    <local:SidebarOptionView Margin="0 0 0 3"
+                                             Height="40"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

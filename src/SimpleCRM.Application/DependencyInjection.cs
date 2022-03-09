@@ -9,6 +9,12 @@ namespace SimpleCRM.Application
         public static void AddApplication(this ServiceCollection services)
         {
             services.AddMediatR(typeof(CoreViewModel));
+
+            services.AddSingleton<LayoutViewModel>();
+            services.AddSingleton<SidebarViewModel>();
+            services.AddTransient<DashboardViewModel>();
+            services.AddTransient<InvoicesViewModel>();
+            services.AddTransient<SettingsViewModel>();
         }
     }
 }
